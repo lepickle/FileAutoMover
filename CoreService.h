@@ -7,6 +7,7 @@
 #include <QMessageBox>
 #include <QMessageLogger>
 #include <QtDebug>
+#include <QFileInfo>
 
 class CoreService
 {
@@ -16,10 +17,13 @@ private:
     QString path;
     QString get_filename_extension_only(QString text);
     QString get_filename_firstletter_only(QString text);
+    int get_filename_filesize_only(QString path);
     void create_folders_extension_names();
     void create_folders_file_firstletter();
-    void move_folders_extension_names();
-    void move_folders_first_letter();
+    void create_folders_file_size();
+    void move_files_extension_names();
+    void move_files_first_letter();
+    void move_files_file_size();
 public:
     enum Setting {
         MoveByExtension,
@@ -38,8 +42,7 @@ public:
     void ShowMessageBox(QString message);
     void FilePath(QString s);
     QString FilePath();
-    Setting getMoveMode() const;
-    void setMoveMode(const Setting &value);
+    int test_get_filename_filesize_only(QString path);
 };
 
 CoreService::CoreService(QWidget * root)
@@ -55,6 +58,11 @@ void CoreService::FilePath(QString s)
 QString CoreService::FilePath()
 {
     return path;
+}
+
+int CoreService::test_get_filename_filesize_only(QString path)
+{
+    return get_filename_filesize_only(path);
 }
 
 QString CoreService::get_filename_extension_only(QString text)//filters the filename and returns only the extension name
@@ -79,6 +87,12 @@ QString CoreService::get_filename_extension_only(QString text)//filters the file
 QString CoreService::get_filename_firstletter_only(QString text)
 {
     return text[0].toUpper();
+}
+
+int CoreService::get_filename_filesize_only(QString path)
+{
+    QFileInfo file(path);
+    return file.size();
 }
 
 void CoreService::ShowMessageBox(QString message)
@@ -146,7 +160,31 @@ void CoreService::create_folders_file_firstletter()
     }
 }
 
-void CoreService::move_folders_extension_names()
+void CoreService::create_folders_file_size()//to add more size functions
+{
+    foreach (QString fileSize, list_files())
+    {
+        int totalSize = get_filename_filesize_only(path+"/"+fileSize);
+        if (totalSize >= 1 && totalSize < 1000)
+        {
+            QDir dir(path+"/"+"LessThan1KB");
+            if (!dir.exists())
+            {
+                dir.mkpath(path+"/"+"LessThan1KB");
+            }
+        }
+        else
+        {
+            QDir dir(path+"/"+"MoreThan1GB");
+            if (!dir.exists())
+            {
+                dir.mkpath(path+"/"+"MoreThan1GB");
+            }
+        }
+    }
+}
+
+void CoreService::move_files_extension_names()
 {
     foreach(QString file, list_files())
     {
@@ -156,7 +194,7 @@ void CoreService::move_folders_extension_names()
     //implement remove
 }
 
-void CoreService::move_folders_first_letter()
+void CoreService::move_files_first_letter()
 {
     foreach(QString file, list_files())
     {
@@ -166,6 +204,22 @@ void CoreService::move_folders_first_letter()
     //implement remove
 }
 
+void CoreService::move_files_file_size()//to add more size functions
+{
+    foreach(QString file, list_files())
+    {
+        int totalSize = get_filename_filesize_only(path+"/"+file);
+        if (totalSize >= 1000 && totalSize < 2000)
+        {
+            QFile::copy(path+"/"+file, path+"/"+"LessThan1KB/"+file);
+        }
+        else
+        {
+            QFile::copy(path+"/"+file, path+"/"+"MoreThan1GB/"+file);
+        }
+    }
+}
+
 void CoreService::sortFiles()
 {
     switch(MoveMode)
@@ -173,18 +227,23 @@ void CoreService::sortFiles()
         case CoreService::MoveByExtension:
             SetExtensionFileList();
             create_folders_extension_names();
-            move_folders_extension_names();
+            move_files_extension_names();
             ShowMessageBox("Files have now been moved by Extension");
             break;
         case CoreService::MoveByFirstLetter:
             create_folders_file_firstletter();
-            move_folders_first_letter();
+            move_files_first_letter();
             ShowMessageBox("Files have now been moved by FirstLetter");
+            break;
+        case CoreService::MoveByFileSize:
+            create_folders_file_size();
+            move_files_file_size();
+            ShowMessageBox("Files have now been moved by File Size");
             break;
         default:
             ShowMessageBox("Invalid Command, Will move using First Letter Folders");
             create_folders_file_firstletter();
-            move_folders_first_letter();
+            move_files_first_letter();
             break;
     }
     qDebug()<<"sortFile();";
