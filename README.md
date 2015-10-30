@@ -11,5 +11,10 @@ Then this will help you sort files into their own folders depending on how you w
 * [x] Move files according to their extension names
 * [x] Move files according to their first filename letter
 * [ ] Move files according to their date modification/creation
-* [ ] Move files according to their filesize
+* [x] Move files according to their filesize
 * [ ] Move files according to user's custom settings (This gon' be hard)
+
+#### Notes:
+
+* The software just copies the files on their respected folders
+* Haven't implemented deletion yet for safety
