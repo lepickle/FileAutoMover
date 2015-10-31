@@ -42,7 +42,6 @@ public:
     void ShowMessageBox(QString message);
     void FilePath(QString s);
     QString FilePath();
-    int test_get_filename_filesize_only(QString path);
 };
 
 CoreService::CoreService(QWidget * root)
@@ -58,11 +57,6 @@ void CoreService::FilePath(QString s)
 QString CoreService::FilePath()
 {
     return path;
-}
-
-int CoreService::test_get_filename_filesize_only(QString path)
-{
-    return get_filename_filesize_only(path);
 }
 
 QString CoreService::get_filename_extension_only(QString text)//filters the filename and returns only the extension name
