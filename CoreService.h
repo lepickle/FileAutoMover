@@ -99,7 +99,7 @@ void CoreService::ShowMessageBox(QString message)
     qMsg.exec();
 }
 
-QString CoreService::GetFilePathBrowse()
+QString CoreService::GetFilePathBrowse()//open folder
 {
     QString filePath = QFileDialog::getExistingDirectory(parent,
                                                          "Open Directory",
@@ -109,9 +109,6 @@ QString CoreService::GetFilePathBrowse()
     return filePath;
 
 }
-
-//TODO:
-//Need to get list of extension types to move them into each of their folders
 
 void CoreService::SetExtensionFileList()
 {
@@ -125,7 +122,7 @@ void CoreService::SetExtensionFileList()
     extensionNameList = tempENL;
 }
 
-QStringList CoreService::list_files()
+QStringList CoreService::list_files()//this will list all files from the selected directory
 {
     QDir myDir(path);
     QStringList fileList = myDir.entryList(QDir::Files);
@@ -173,7 +170,7 @@ void CoreService::create_folders_file_size()//to add more size functions
     }
 }
 
-void CoreService::mkdir_with_size(QString folderName)
+void CoreService::mkdir_with_size(QString folderName)//create folder with foldername
 {
     QDir dir(path+"/"+folderName);
     if (!dir.exists())
@@ -229,8 +226,8 @@ void CoreService::sortFiles()
 {
     switch(MoveMode)
     {
-    case CoreService::MoveByExtension:
-        SetExtensionFileList();
+        case CoreService::MoveByExtension:
+            SetExtensionFileList();
             create_folders_extension_names();
             move_files_extension_names();
             ShowMessageBox("Files have now been moved by Extension");
