@@ -10,10 +10,10 @@ Inspired from FileJuggler for Windows, though this one does more moving than act
 
 #### TODO features:
 
-* [x] Move files according to their extension names
-* [x] Move files according to their first filename letter
-* [ ] Move files according to their date modification/creation
-* [x] Move files according to their filesize
+* [x] Move files by extension names
+* [x] Move files by first filename letter
+* [ ] Move files by date modification/creation
+* [x] Move files by filesize
 * [ ] Move files according to user's custom settings (This gon' be hard)
 
 #### Notes:
