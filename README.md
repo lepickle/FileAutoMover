@@ -6,6 +6,8 @@ Do you have a messy desktop like this?![desktop](http://i.imgur.com/M7PXn9N.jpg)
 
 Then this will help you sort files into their own folders depending on how you want them to be sorted.
 
+Inspired from FileJuggler for Windows, though this one does more moving than actual monitoring.
+
 #### TODO features:
 
 * [x] Move files according to their extension names
