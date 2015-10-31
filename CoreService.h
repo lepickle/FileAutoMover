@@ -21,9 +21,11 @@ private:
     void create_folders_extension_names();
     void create_folders_file_firstletter();
     void create_folders_file_size();
+    void mkdir_with_size(QString folderName);
     void move_files_extension_names();
     void move_files_first_letter();
     void move_files_file_size();
+    void copy_with_filesize(QString fileName, QString folderName);
 public:
     enum Setting {
         MoveByExtension,
@@ -162,20 +164,21 @@ void CoreService::create_folders_file_size()//to add more size functions
         int totalSize = get_filename_filesize_only(path+"/"+fileSize);
         if (totalSize >= 1 && totalSize < 1000)
         {
-            QDir dir(path+"/"+"LessThan1KB");
-            if (!dir.exists())
-            {
-                dir.mkpath(path+"/"+"LessThan1KB");
-            }
+            mkdir_with_size("LessThan1KB");
         }
         else
         {
-            QDir dir(path+"/"+"MoreThan1GB");
-            if (!dir.exists())
-            {
-                dir.mkpath(path+"/"+"MoreThan1GB");
-            }
+            mkdir_with_size("MoreThan1KB");
         }
+    }
+}
+
+void CoreService::mkdir_with_size(QString folderName)
+{
+    QDir dir(path+"/"+folderName);
+    if (!dir.exists())
+    {
+        dir.mkpath(path+"/"+folderName);
     }
 }
 
@@ -204,23 +207,30 @@ void CoreService::move_files_file_size()//to add more size functions
     foreach(QString file, list_files())
     {
         int totalSize = get_filename_filesize_only(path+"/"+file);
-        if (totalSize >= 1000 && totalSize < 2000)
+        if (totalSize >= 0 && totalSize < 1000)
         {
-            QFile::copy(path+"/"+file, path+"/"+"LessThan1KB/"+file);
+            copy_with_filesize(file, "LessThan1KB");
         }
         else
         {
-            QFile::copy(path+"/"+file, path+"/"+"MoreThan1GB/"+file);
+            copy_with_filesize(file, "MoreThan1KB");
         }
     }
 }
+
+void CoreService::copy_with_filesize(QString fileName, QString folderName)
+{
+    QFile::copy(path+"/"+fileName, path+"/"+folderName+"/"+fileName);
+}
+
+
 
 void CoreService::sortFiles()
 {
     switch(MoveMode)
     {
-        case CoreService::MoveByExtension:
-            SetExtensionFileList();
+    case CoreService::MoveByExtension:
+        SetExtensionFileList();
             create_folders_extension_names();
             move_files_extension_names();
             ShowMessageBox("Files have now been moved by Extension");
