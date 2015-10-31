@@ -29,7 +29,7 @@ void MainWindow::on_btn_ListFiles_clicked()
 {
     cs = new CoreService(this);
     filePath = ui->folderDir->text();
-    cs->FilePath(filePath);
+    cs->FilePath(filePath);//set file path
     QStringList fileList = cs->list_files();
 
     QStandardItemModel* model = new QStandardItemModel(0, 1);
@@ -49,6 +49,7 @@ void MainWindow::on_btn_SortFiles_clicked()
     if (!ui->folderDir->text().isEmpty())
     {
         filePath = ui->folderDir->text();
+        cs = new CoreService(this);
         cs->FilePath(filePath);
         if (ui->rdBtn_MoveByExtension->isChecked())
         {
@@ -65,7 +66,6 @@ void MainWindow::on_btn_SortFiles_clicked()
         else if (ui->rdBtn_MoveByFileSize->isChecked())
         {
             cs->MoveMode = cs->CoreService::MoveByFileSize;
-//            cs->ShowMessageBox("hello");
         }
         cs->sortFiles();
         qDebug()<<"sortFiles()";
