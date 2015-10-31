@@ -98,6 +98,7 @@ int CoreService::get_filename_filesize_only(QString path)
 void CoreService::ShowMessageBox(QString message)
 {
     QMessageBox qMsg;
+    qMsg.setIcon(QMessageBox::Information);
     qMsg.setText(message);
     qMsg.exec();
 }
