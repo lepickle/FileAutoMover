@@ -14,6 +14,7 @@ Inspired from FileJuggler for Windows, though this one does more moving than act
 * [x] Move files by first filename letter
 * [ ] Move files by date modification/creation
 * [x] Move files by filesize
+* [ ] Move files by file type
 * [ ] Move files according to user's custom settings (This gon' be hard)
 
 #### Notes:
