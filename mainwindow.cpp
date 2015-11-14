@@ -59,14 +59,6 @@ void MainWindow::on_btn_SortFiles_clicked()
         {
             cs->MoveMode = cs->CoreService::MoveByFirstLetter;
         }
-        else if (ui->rdBtn_MoveByModDate->isChecked())
-        {
-
-        }
-        else if (ui->rdBtn_MoveByFileSize->isChecked())
-        {
-            cs->MoveMode = cs->CoreService::MoveByFileSize;
-        }
         cs->sortFiles();
         qDebug()<<"sortFiles()";
     }
