@@ -22,6 +22,8 @@ private slots:
 
     void on_btn_SortFiles_clicked();
 
+    void on_btn_CreateCustomSetting_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
