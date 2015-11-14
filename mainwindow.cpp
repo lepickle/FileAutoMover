@@ -2,10 +2,12 @@
 #include "ui_mainwindow.h"
 #include <CoreService.h>
 #include <QStandardItemModel>
+#include "customsettings.h"
 
 CoreService *cs;
 QStringList extension_name_list;
 QString filePath;
+CustomSettings *customSettingsForm;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -64,4 +66,18 @@ void MainWindow::on_btn_SortFiles_clicked()
     }
     else
         cs->ShowMessageBox("No Directory selected");
+}
+
+void MainWindow::on_btn_CreateCustomSetting_clicked()
+{
+    if (!customSettingsForm)
+    {
+        customSettingsForm = new CustomSettings();
+    }
+    if (customSettingsForm)
+    {
+        customSettingsForm->mainWindowForm = this;
+        customSettingsForm->show();
+//        this->hide();
+    }
 }
