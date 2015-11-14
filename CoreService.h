@@ -20,12 +20,8 @@ private:
     int get_filename_filesize_only(QString path);
     void create_folders_extension_names();
     void create_folders_file_firstletter();
-    void create_folders_file_size();
-    void mkdir_with_size(QString folderName);
     void move_files_extension_names();
     void move_files_first_letter();
-    void move_files_file_size();
-    void copy_with_filesize(QString fileName, QString folderName);
 public:
     enum Setting {
         MoveByExtension,
@@ -154,30 +150,38 @@ void CoreService::create_folders_file_firstletter()
     }
 }
 
-void CoreService::create_folders_file_size()//to add more size functions
-{
-    foreach (QString fileSize, list_files())
-    {
-        int totalSize = get_filename_filesize_only(path+"/"+fileSize);
-        if (totalSize >= 1 && totalSize < 1000)
-        {
-            mkdir_with_size("LessThan1KB");
-        }
-        else
-        {
-            mkdir_with_size("MoreThan1KB");
-        }
-    }
-}
+//void CoreService::create_folders_file_size()//to add more size functions
+//{
+//    QList<int> min_max_file_size_list;
+//    foreach (QString fileSize, list_files())
+//    {
+//        int totalSize = get_filename_filesize_only(path+"/"+fileSize);
+//        min_max_file_size_list.append(totalSize);
+//        // I think I should get the minimum and the maximum file sizes first
 
-void CoreService::mkdir_with_size(QString folderName)//create folder with foldername
-{
-    QDir dir(path+"/"+folderName);
-    if (!dir.exists())
-    {
-        dir.mkpath(path+"/"+folderName);
-    }
-}
+
+
+//        if (totalSize >= 0 && totalSize < 100)
+//            mkdir_with_size("~100B");
+//        else if (totalSize >= 100 && totalSize < 1000)
+//            mkdir_with_size("~1KB");
+//        else if (totalSize >= 1000 && totalSize < 10000)
+//            mkdir_with_size("~1MB");
+//        else
+//        {
+//            mkdir_with_size("MoreThan1KB");
+//        }
+//    }
+//}
+
+//void CoreService::mkdir_with_size(QString folderName)//create folder with foldername
+//{
+//    QDir dir(path+"/"+folderName);
+//    if (!dir.exists())
+//    {
+//        dir.mkpath(path+"/"+folderName);
+//    }
+//}
 
 void CoreService::move_files_extension_names()
 {
@@ -199,27 +203,26 @@ void CoreService::move_files_first_letter()
     //implement remove
 }
 
-void CoreService::move_files_file_size()//to add more size functions
-{
-    foreach(QString file, list_files())
-    {
-        int totalSize = get_filename_filesize_only(path+"/"+file);
-        if (totalSize >= 0 && totalSize < 1000)
-        {
-            copy_with_filesize(file, "LessThan1KB");
-        }
-        else
-        {
-            copy_with_filesize(file, "MoreThan1KB");
-        }
-    }
-}
+//void CoreService::move_files_file_size()//to add more size functions
+//{
+//    foreach(QString file, list_files())
+//    {
+//        int totalSize = get_filename_filesize_only(path+"/"+file);
+//        if (totalSize >= 0 && totalSize < 1000)
+//        {
+//            copy_with_filesize(file, "LessThan1KB");
+//        }
+//        else
+//        {
+//            copy_with_filesize(file, "MoreThan1KB");
+//        }
+//    }
+//}
 
-void CoreService::copy_with_filesize(QString fileName, QString folderName)
-{
-    QFile::copy(path+"/"+fileName, path+"/"+folderName+"/"+fileName);
-}
-
+//void CoreService::copy_with_filesize(QString fileName, QString folderName)
+//{
+//    QFile::copy(path+"/"+fileName, path+"/"+folderName+"/"+fileName);
+//}
 
 
 void CoreService::sortFiles()
@@ -237,11 +240,11 @@ void CoreService::sortFiles()
             move_files_first_letter();
             ShowMessageBox("Files have now been moved by FirstLetter");
             break;
-        case CoreService::MoveByFileSize:
-            create_folders_file_size();
-            move_files_file_size();
-            ShowMessageBox("Files have now been moved by File Size");
-            break;
+//        case CoreService::MoveByFileSize:
+//            create_folders_file_size();
+//            move_files_file_size();
+//            ShowMessageBox("Files have now been moved by File Size");
+//            break;
         default:
             ShowMessageBox("Invalid Command, Will move using First Letter Folders");
             create_folders_file_firstletter();
