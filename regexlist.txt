@@ -1,0 +1,8 @@
+[Description] = regex 
+
+[Move file starting with any number] = /[0-9]+/
+[Move file with a particular string (Case Sensitive)] = /(string)/
+[Move file with a particular string (ignore case)] = /(string)/i
+
+
+tested on https://regex101.com
